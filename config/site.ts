@@ -1,8 +1,8 @@
 export const siteConfig = {
-  name: "hanul.dev",
-  url: "https://hanul.dev",
-  description: "Hanul's dev blog",
-  author: "Hanul",
+  name: "jiyun.dev",
+  url: "https://jiyun.dev",
+  description: "Jiyun's dev blog",
+  author: "Jiyun",
   links: {
     github: "https://github.com/ImJiyun",
   },
