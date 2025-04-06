@@ -1,31 +1,28 @@
+// app/posts/[...slug]/page.tsx
+
 import { posts } from "#site/content";
 import { MDXContent } from "@/components/mdx-components";
 import { formatDate } from "@/lib/utils";
 import { Calendar } from "lucide-react";
 import { notFound } from "next/navigation";
 
-interface PostDetailPageProps {
-  params: {
-    slug: string[];
-  };
-}
+// Params 타입이 Promise<{ slug: string[] }> 라는 가정 하에
+type Params = Promise<{ slug: string[] }>;
 
-async function getPostFromParams(params: PostDetailPageProps["params"]) {
-  const slug = params?.slug?.join("/");
+async function getPostFromParams(paramsPromise: Params) {
+  const params = await paramsPromise;
+  const slug = params.slug.join("/");
   const post = posts.find((post) => post.slugAsParams === slug);
-
   return post;
 }
 
-export async function generateStaticParams(): Promise<
-  PostDetailPageProps["params"][]
-> {
+export async function generateStaticParams(): Promise<Awaited<Params>[]> {
   return posts.map((post) => ({
     slug: post.slugAsParams.split("/"),
   }));
 }
 
-export default async function PostDetailPage({ params }: PostDetailPageProps) {
+export default async function PostDetailPage({ params }: { params: Params }) {
   const post = await getPostFromParams(params);
 
   if (!post || !post.published) {

@@ -6,15 +6,16 @@ import { sortPosts } from "@/lib/utils";
 const POSTS_PER_PAGE = 5;
 
 interface PostsPageProps {
-  searchParams: {
-    page?: string;
-  };
+  searchParams: Promise<{ page?: string }>;
 }
 
 export default async function PostsPage({ searchParams }: PostsPageProps) {
-  const currentPage = Number(searchParams?.page) || 1;
+  const params = await searchParams;
+  const currentPage = Number(params?.page) || 1;
+
   const sortedPosts = sortPosts(posts.filter((post) => post.published));
   const totalPages = Math.ceil(sortedPosts.length / POSTS_PER_PAGE);
+
   const displayPosts = sortedPosts.slice(
     POSTS_PER_PAGE * (currentPage - 1),
     POSTS_PER_PAGE * currentPage
