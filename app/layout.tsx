@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
-import Header from "@/components/header";
-import { Providers } from "@/components/providers";
+import { Providers } from "@/components/theme/providers";
+import Header from "@/components/header/header";
 
 const ibmPlexMono = IBM_Plex_Mono({
   variable: "--font-ibm-plex-mono",
